@@ -72,9 +72,9 @@ export function CreateAccountDrawer({children}) {
           <DrawerHeader>
             <DrawerTitle>Create New Account</DrawerTitle>
           </DrawerHeader>
-          <div className='px-4 pb-4'>
-            <form className='space-y-4' onSubmit={handleSubmit(onSubmit)}>
-                <div className='space-y-2'>
+          <div className="px-4 pb-4">
+            <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+                <div className="space-y-2">
                     <label 
                      htmlFor="name"
                      className='text-sm font-medium'>
@@ -90,7 +90,7 @@ export function CreateAccountDrawer({children}) {
                     )}
                 </div>
 
-          <div className='space-y-2'>
+               <div className="space-y-2">
                     <label 
                     htmlFor="type" 
                     className='text-sm font-medium'>
@@ -112,7 +112,7 @@ export function CreateAccountDrawer({children}) {
                         <p className='text-sm text-red-500'>{errors.type.message}</p>
                     )}
                 </div>
-                    <div className='space-y-2'>
+                <div className='space-y-2'>
                     <label htmlFor="balance" className='text-sm font-medium'>
                         Initial Balnce
                     </label>
