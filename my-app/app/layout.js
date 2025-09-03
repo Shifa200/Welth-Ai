@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
         <main className="min-h-screen">
           {children}
         </main>
-        <Toaster richColors/>
+        <Toaster richColors />
         {/* footer */}
         <footer className="bg-blue-50 py-12"> 
          <div className="container mx-auto px-4 text-center text-grey-600">
