@@ -1,9 +1,11 @@
+import { sendEmail } from "@/actions/send-email";
 import { db } from "../prisma";
 import { inngest } from "./client";
+import EmailTemplate from "@/emails/template";
 
-export const helloWorld = inngest.createFunction(
+export const checkBudgetAlert = inngest.createFunction(
   { name: "Check Budget Alerts" },
-  { cront: "0 */6 * * *" },
+  { cron: "0 */6 * * *" },
   async ({ step }) => {
     const budgets= await step.run("fetch-budget", async () => {
         return await db.budget.findMany({
@@ -29,17 +31,31 @@ export const helloWorld = inngest.createFunction(
         if (!defaultAccount) continue; //skip if no default account
 
         await step.run(`check-budget-${budget.id}`, async () => {
-            const startDate = new Date();
-            startDate.setDate(1); //Start of current month
+
+
+            const currentDate = new Date();
+            const startOfMonth = new Date(
+               currentDate.getFullYear(),
+               currentDate.getMonth(),
+               1
+            );
+
+            const endOfMonth = new Date(
+                currentDate.getFullYear(),
+                currentDate.getMonth() + 1,
+                0
+            );
+        
 
 
             const expenses = await db.transaction.aggregate({
                     where: {
-                        userId: user.id,
+                        userId: budget.user.id,
                         accountId: defaultAccount.id,
                         type: "EXPENSE",
                         date: {
-                            gte: startDate,
+                            gte: startOfMonth,
+                            lte: endOfMonth,
                         },
 
                     },
@@ -52,10 +68,28 @@ export const helloWorld = inngest.createFunction(
                 const budgetAmount = budget.amount;
                 const percentageUsed = (totalExpenses / budgetAmount) * 100;
 
-                if(percentageUsed>=80 && (!budget.lastAlertSent||isNewMonth(new Date(budget.lastAlertSent), new
-                 Date()))
+
+                if(percentageUsed>=80 &&
+                     (!budget.lastAlertSent||
+                        isNewMonth(new Date(budget.lastAlertSent), 
+                        new Date()))
                 ) {
                     //Send Email
+
+                     await sendEmail({
+                            to: budget.user.email,
+                            subject: `Budget Alert for ${defaultAccount.name}`,
+                            react: EmailTemplate({
+                            userName: budget.user.name,
+                            type: "budget-alert",
+                            data: {
+                                percentageUsed,
+                                budgetAmount: parseInt(budgetAmount).toFixed(1),
+                                totalExpenses: parseInt(totalExpenses).toFixed(1),
+                                accountName: defaultAccount.name,
+                            },
+                            }),
+                        });
                     // Updatte lastAlertSent
                     await db.budget.update({
                         where: { id: budget.id },
