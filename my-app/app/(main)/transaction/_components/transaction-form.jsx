@@ -18,6 +18,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { format } from "date-fns";
 import { Calendar } from '@/components/ui/calendar';
+import { ReceiptScanner } from './receipt-scanner';
 
 
 
@@ -86,7 +87,7 @@ const onSubmit = async (data) => {
     }
 };
 
-/*const handleScanComplete = (scannedData) => {
+const handleScanComplete = (scannedData) => {
     if (scannedData) {
       setValue("amount", scannedData.amount.toString());
       setValue("date", new Date(scannedData.date));
@@ -98,7 +99,7 @@ const onSubmit = async (data) => {
       }
       toast.success("Receipt scanned successfully");
     }
-};*/
+};
 
 useEffect(() => {
     if (transactionResult?.success && !transactionLoading) {
@@ -127,7 +128,7 @@ return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
 
       {/* Receipt Scanner - Only show in create mode */}
-      {/*!editMode && <ReceiptScanner onScanComplete={handleScanComplete} />}
+      <ReceiptScanner onScanComplete={handleScanComplete} />
 
       {/* Type */}
       <div className="space-y-2">
