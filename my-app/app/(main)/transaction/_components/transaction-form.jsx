@@ -1,6 +1,6 @@
 "use client"
 
-import { createTransaction} from '@/actions/transaction';
+import { createTransaction, updateTransaction} from '@/actions/transaction';
 import { TransactionSchema } from '@/app/lib/schema';
 import { Button } from '@/components/ui/button';
 import CreateAccountDrawer from '@/components/ui/create-account-drawer';
@@ -128,7 +128,7 @@ return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
 
       {/* Receipt Scanner - Only show in create mode */}
-      <ReceiptScanner onScanComplete={handleScanComplete} />
+      {!editMode && <ReceiptScanner onScanComplete={handleScanComplete} />}
 
       {/* Type */}
       <div className="space-y-2">

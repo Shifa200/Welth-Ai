@@ -379,7 +379,7 @@ import { toast } from 'sonner';
              <DropdownMenuItem
                onClick={() =>
                  router.push(
-                  `/transaction/edit/${transaction.id}`
+                  `/transaction/create?edit=${transaction.id}`
                 )
               }
              >
