@@ -7,8 +7,9 @@ import { Suspense } from "react";
 const DashboardLayout = () => {
   return (
     <div className="px-5">
+      <div className="flex items-center justify-between mb-5">
         <h1 className='text-6xl font-bold bg-gradient-to-r from-blue-500 to-purple-400 bg-clip-text text-transparent mb-5'>Dashboard</h1>
-    
+      </div>
 
     {/* Dashboard Page */}
     <Suspense

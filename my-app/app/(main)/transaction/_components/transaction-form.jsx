@@ -81,9 +81,9 @@ const onSubmit = async (data) => {
     };
 
     if (editMode) {
-      transactionFn(editId, formData);
+      await transactionFn(editId, formData);
     } else {
-      transactionFn(formData);
+      await transactionFn(formData);
     }
 };
 
