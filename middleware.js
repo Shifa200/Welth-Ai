@@ -1,7 +1,7 @@
-import arcjet, { detectBot, shield } from '@arcjet/next';
-import { createRouteMatcher, getAuth } from '@clerk/nextjs/server';
+import arcjet, { createMiddleware, detectBot, shield } from '@arcjet/next';
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 
-const isProtected = createRouteMatcher([
+const isProtectedRoute = createRouteMatcher([
   "/dashboard(.*)",
   "/account(.*)",
   "/transaction(.*)",
@@ -18,18 +18,19 @@ const aj = arcjet({
   ],
 });
 
-export default async function handler(req, res) {
-  try {
-    await aj(req);
-
-    const { userId } = getAuth(req);
-    if (!userId && isProtected(req)) {
-      return res.redirect('/sign-in');
-    }
-
-    res.status(200).json({ ok: true });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Middleware failed' });
+const clerk = clerkMiddleware(async (auth, req) => {
+  const { userId } = await auth();
+  if (!userId && isProtectedRoute(req)) {
+    const { redirectToSignIn } = await auth();
+    return redirectToSignIn();
   }
-}
+});
+
+export default createMiddleware(aj, clerk);
+
+export const config = {
+  matcher: [
+    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    '/(api|trpc)(.*)',
+  ],
+};
