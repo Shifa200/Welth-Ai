@@ -13,11 +13,7 @@ import { getCurrentBudget } from '@/actions/budget';
 import DashboardOverview from './_components/transaction-overview';
 
 async function DashboardPage () {
-const { userId } = await getAuth();
 
-  if (!userId) {
-    redirect('/sign-in');  // redirect if user is not authenticated
-  }
 const accounts = await getUserAccounts();
 const defaultAccount = accounts.find((account) => account.isDefault);
 
