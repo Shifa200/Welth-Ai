@@ -10,6 +10,7 @@ const nextConfig = {
   },
 
   experimental: {
+    appDir: true,
     serverActions: {
       bodySizeLimit: "5mb",
     }
