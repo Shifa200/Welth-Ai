@@ -1,6 +1,8 @@
 import { getDashboardData, getUserAccounts } from '@/actions/dashboard';
 import { Card, CardContent } from '@/components/ui/card';
 import { CreateAccountDrawer } from '@/components/ui/create-account-drawer';
+import { getAuth } from '@clerk/nextjs/server';
+import { redirect } from 'next/navigation';
 
 import { Plus } from 'lucide-react';
 import React, { Suspense } from 'react';
@@ -11,7 +13,11 @@ import { getCurrentBudget } from '@/actions/budget';
 import DashboardOverview from './_components/transaction-overview';
 
 async function DashboardPage () {
+const { userId } = await getAuth();
 
+  if (!userId) {
+    redirect('/sign-in');  // redirect if user is not authenticated
+  }
 const accounts = await getUserAccounts();
 const defaultAccount = accounts.find((account) => account.isDefault);
 
