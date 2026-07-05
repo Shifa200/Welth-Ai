@@ -5,7 +5,7 @@ and automated financial reports.
 
 **🔗 Live demo:** https://welth-ai-6x1a.vercel.app
 
-![Welth screenshot]([<img width="2940" height="1912" alt="image" src="https://github.com/user-attachments/assets/9f883afe-7d02-4ca8-8c09-b5d4cb93cfdd" />
+([<img width="2940" height="1912" alt="image" src="https://github.com/user-attachments/assets/9f883afe-7d02-4ca8-8c09-b5d4cb93cfdd" />
 )
 
 ## Features
