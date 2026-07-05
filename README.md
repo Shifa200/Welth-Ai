@@ -5,8 +5,8 @@ and automated financial reports.
 
 **🔗 Live demo:** https://welth-ai-6x1a.vercel.app
 
-([<img width="2940" height="1912" alt="image" src="https://github.com/user-attachments/assets/9f883afe-7d02-4ca8-8c09-b5d4cb93cfdd" />
-)
+<img width="2940" height="1912" alt="image" src="https://github.com/user-attachments/assets/9f883afe-7d02-4ca8-8c09-b5d4cb93cfdd" />
+
 
 ## Features
 - **Multi-account tracking** — accounts, income/expense transactions, full history
